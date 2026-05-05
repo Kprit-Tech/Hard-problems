@@ -1,0 +1,130 @@
+🧾 Question: Java – Braces
+
+Implement a Parser class that checks whether a string of brackets is balanced.
+
+A string containing only {, }, (, ) is considered balanced if:
+
+It is an empty string
+If a and b are balanced, then ab is balanced
+If a is balanced, then (a) and {a} are balanced
+🔹 Output Requirement:
+
+Return:
+
+"true" → if string is balanced
+"false" → otherwise
+📌 Example 1
+
+Input:
+
+{}()
+({()})
+
+Output:
+
+true
+true
+📌 Example 2
+
+Input:
+
+{}(
+({)}
+(
+
+Output:
+
+false
+false
+false
+💡 Approach (Concept)
+
+Use a Stack:
+
+Push opening brackets ( {
+On closing brackets:
+Check if stack is empty → false
+Pop and match
+At the end:
+Stack empty → true
+Else → false
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Answer:
+import java.util.*;
+import java.util.Scanner;
+
+// DO NOT use public for Parser
+class Parser {
+    static String isBalanced(String s) {
+        Stack<Character> stack = new Stack<>();
+
+        for (char ch : s.toCharArray()) {
+
+            // Opening brackets
+            if (ch == '(' || ch == '{') {
+                stack.push(ch);
+            }
+
+            // Closing brackets
+            else if (ch == ')' || ch == '}') {
+
+                if (stack.isEmpty()) {
+                    return "false";
+                }
+
+                char top = stack.pop();
+
+                // Check matching
+                if ((ch == ')' && top != '(') ||
+                    (ch == '}' && top != '{')) {
+                    return "false";
+                }
+            }
+        }
+
+        // Final check
+        return stack.isEmpty() ? "true" : "false";
+    }
+}
+
+class Solution {
+    public static void main(String[] args) {
+        Parser parser = new Parser();
+        Scanner in = new Scanner(System.in);
+
+        while (in.hasNext()) {
+            System.out.println(parser.isBalanced(in.next()));
+        }
+
+        in.close();
+    }
+}
